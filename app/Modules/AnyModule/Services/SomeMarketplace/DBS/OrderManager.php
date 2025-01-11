@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Modules\AnyModule\Services\SameMarketplace\DBS;
+namespace Modules\AnyModule\Services\SomeMarketplace\DBS;
 
 use DateTimeImmutable;
 use Devmakis\ProdCalendar\Calendar;
 use Devmakis\ProdCalendar\Clients\Exceptions\ClientException;
 use Libs\Services\RetailCrm\ApiClient as RetailCrmApiClient;
-use Modules\AnyModule\Models\SameMarketplace\Shipment;
-use Modules\AnyModule\Services\SameMarketplace\BaseOrderManager;
+use Modules\AnyModule\Models\SomeMarketplace\Shipment;
+use Modules\AnyModule\Services\SomeMarketplace\BaseOrderManager;
 use Modules\AnyModule\Services\ProductSet;
 use Psr\Log\LoggerInterface;
 
@@ -53,7 +53,7 @@ class OrderManager extends BaseOrderManager
 
     public static function getServiceName(): string
     {
-        return 'SAME_MARKETPLACE_DBS_' . strtoupper(static::classNameShort());
+        return 'SOME_MARKETPLACE_DBS_' . strtoupper(static::classNameShort());
     }
 
     /**

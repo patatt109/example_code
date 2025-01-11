@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\AnyModule\Models\SameMarketplace;
+namespace Modules\AnyModule\Models\SomeMarketplace;
 
 use Libs\Traits\DataPopulate;
 use Modules\Main\ModelFields\JsonField;
@@ -181,7 +181,7 @@ class Shipment extends Model
     {
         $class = static::class;
         if (!isset(self::$_tableNames[$class])) {
-            self::$_tableNames[$class] = 'svc_same_marketplace_shipment';
+            self::$_tableNames[$class] = 'svc_some_marketplace_shipment';
         }
         return self::$_tableNames[$class];
     }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\AnyModule\Models\SameMarketplace;
+namespace Modules\AnyModule\Models\SomeMarketplace;
 
 use Libs\Traits\DataPopulate;
 use Modules\Main\ModelFields\JsonField;
@@ -129,7 +129,7 @@ class ShipmentItem extends Model
     {
         return [
             self::STATUS_MERCHANT_CANCELED => 'cancel-other',
-            self::STATUS_NEW => 'new-same-marketplace',
+            self::STATUS_NEW => 'new-some-marketplace',
             self::STATUS_PENDING => null,
             self::STATUS_PENDING_CONFIRMATION => null,
             self::STATUS_CONFIRMED => 'send-to-assembling',
@@ -159,7 +159,7 @@ class ShipmentItem extends Model
     {
         $class = static::class;
         if (!isset(self::$_tableNames[$class])) {
-            self::$_tableNames[$class] = 'svc_same_marketplace_shipment_item';
+            self::$_tableNames[$class] = 'svc_some_marketplace_shipment_item';
         }
         return self::$_tableNames[$class];
     }

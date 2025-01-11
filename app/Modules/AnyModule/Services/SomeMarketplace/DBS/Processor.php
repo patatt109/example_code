@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Modules\AnyModule\Services\SameMarketplace\DBS;
+namespace Modules\AnyModule\Services\SomeMarketplace\DBS;
 
 use GuzzleHttp\Exception\GuzzleException;
-use Modules\AnyModule\Models\SameMarketplace\Shipment;
-use Modules\AnyModule\Services\SameMarketplace\BaseProcessor;
+use Modules\AnyModule\Models\SomeMarketplace\Shipment;
+use Modules\AnyModule\Services\SomeMarketplace\BaseProcessor;
 use Psr\SimpleCache\InvalidArgumentException;
 
 class Processor extends BaseProcessor
@@ -110,12 +110,12 @@ class Processor extends BaseProcessor
      */
     public function editCustomerCanceledOrders(): void
     {
-        $sameMarketplaceOrderIdList = $this->client->getCustomerCanceledOrderIdList();
-        if (empty($sameMarketplaceOrderIdList)) {
+        $someMarketplaceOrderIdList = $this->client->getCustomerCanceledOrderIdList();
+        if (empty($someMarketplaceOrderIdList)) {
             return;
         }
-        $sameMarketplaceOrderList = $this->client->getOrderList($sameMarketplaceOrderIdList);
-        foreach ($sameMarketplaceOrderList as $item) {
+        $someMarketplaceOrderList = $this->client->getOrderList($someMarketplaceOrderIdList);
+        foreach ($someMarketplaceOrderList as $item) {
             $shipment = $this->shipmentManager->findShipmentByShipmentId((string)$item['shipmentId']);
             if (!$shipment) {
                 continue;
@@ -126,6 +126,6 @@ class Processor extends BaseProcessor
 
     public static function getServiceName(): string
     {
-        return 'SAME_MARKETPLACE_DBS_' . strtoupper(static::classNameShort());
+        return 'SOME_MARKETPLACE_DBS_' . strtoupper(static::classNameShort());
     }
 }

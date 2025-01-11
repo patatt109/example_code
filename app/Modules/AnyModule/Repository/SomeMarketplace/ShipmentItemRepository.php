@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Modules\AnyModule\Repository\SameMarketplace;
+namespace Modules\AnyModule\Repository\SomeMarketplace;
 
 use Libs\Repository\Base;
-use Modules\AnyModule\Models\SameMarketplace\Shipment;
-use Modules\AnyModule\Models\SameMarketplace\ShipmentItem;
+use Modules\AnyModule\Models\SomeMarketplace\Shipment;
+use Modules\AnyModule\Models\SomeMarketplace\ShipmentItem;
 
 class ShipmentItemRepository extends Base
 {

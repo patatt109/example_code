@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Modules\AnyModule\Services\SameMarketplace;
+namespace Modules\AnyModule\Services\SomeMarketplace;
 
 use Libs\Traits\Logger;
-use Modules\AnyModule\Models\SameMarketplace\Shipment;
-use Modules\AnyModule\Models\SameMarketplace\ShipmentItem;
-use Modules\AnyModule\Repository\SameMarketplace\ShipmentItemRepository;
-use Modules\AnyModule\Repository\SameMarketplace\ShipmentRepository;
+use Modules\AnyModule\Models\SomeMarketplace\Shipment;
+use Modules\AnyModule\Models\SomeMarketplace\ShipmentItem;
+use Modules\AnyModule\Repository\SomeMarketplace\ShipmentItemRepository;
+use Modules\AnyModule\Repository\SomeMarketplace\ShipmentRepository;
 use Phact\Helpers\ClassNames;
 use Phact\Helpers\SmartProperties;
 use Psr\Log\LoggerInterface;
@@ -126,6 +126,6 @@ abstract class BaseShipmentManager
 
     public static function getServiceName(): string
     {
-        return 'SAME_MARKETPLACE_' . strtoupper(static::classNameShort());
+        return 'SOME_MARKETPLACE_' . strtoupper(static::classNameShort());
     }
 }

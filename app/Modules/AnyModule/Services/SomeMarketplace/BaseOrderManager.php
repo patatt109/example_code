@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Modules\AnyModule\Services\SameMarketplace;
+namespace Modules\AnyModule\Services\SomeMarketplace;
 
 use Libs\Helpers\Uuid;
-use Libs\Services\SameMarketplace\BaseApiClient as SameMarketplaceApiClient;
+use Libs\Services\SomeMarketplace\BaseApiClient as SomeMarketplaceApiClient;
 use Libs\Services\RetailCrm\ApiClient as RetailCrmApiClient;
 use Libs\Traits\Logger;
-use Modules\AnyModule\Models\SameMarketplace\Shipment;
-use Modules\AnyModule\Repository\SameMarketplace\ShipmentItemRepository;
-use Modules\AnyModule\Repository\SameMarketplace\ShipmentRepository;
+use Modules\AnyModule\Models\SomeMarketplace\Shipment;
+use Modules\AnyModule\Repository\SomeMarketplace\ShipmentItemRepository;
+use Modules\AnyModule\Repository\SomeMarketplace\ShipmentRepository;
 use Modules\AnyModule\Services\ProductSet;
 use Phact\Helpers\ClassNames;
 use Phact\Helpers\SmartProperties;
@@ -22,7 +22,7 @@ abstract class BaseOrderManager
 {
     use SmartProperties, ClassNames, Logger;
 
-    private SameMarketplaceApiClient $sameMarketplaceApiClient;
+    private SomeMarketplaceApiClient $someMarketplaceApiClient;
     protected RetailCrmApiClient $retailCrmApiClient;
     private ShipmentRepository $shipmentRepository;
     private ShipmentItemRepository $shipmentItemRepository;
@@ -70,16 +70,16 @@ abstract class BaseOrderManager
     public function createNewOrderParams(Shipment $shipment): array
     {
         $externalId = !PHACT_DEBUG ? $shipment->shipment_id : Uuid::V4();
-        $externalId = "same-{$shipment->getSchemeName()}-$externalId";
+        $externalId = "some-{$shipment->getSchemeName()}-$externalId";
         $items = $this->createProductItems($shipment);
         $amount = array_reduce($items, static fn($carry, $item) => $carry + $item['initialPrice'] * $item['quantity']);
         $params = [
-            'number' => "{$shipment->shipment_id}SAME",
+            'number' => "{$shipment->shipment_id}SOME",
             'items' => $items,
             'createdAt' => $shipment->creation_date,
             'source' => ['source' => 'sber'],
             'status' => !PHACT_DEBUG ? $shipment->getCrmStatus() : 'test-status',
-            'orderMethod' => "same-marketplace-{$shipment->getSchemeName()}",
+            'orderMethod' => "some-marketplace-{$shipment->getSchemeName()}",
             'externalId' => $externalId,
             'delivery' => [
                 'address' => [
@@ -141,7 +141,7 @@ abstract class BaseOrderManager
         foreach ($orderItems as $offerId => $orderItem) {
             $crmProduct = $this->retailCrmApiClient->getProducts([
                 'sites' => [$this->retailCrmApiClient::DEFAULT_SITE_CODE],
-                'properties' => ['same_markeplace_offer_id' => $offerId],
+                'properties' => ['some_markeplace_offer_id' => $offerId],
             ], 1, 100, static::getServiceName())[0] ?? [];
             $crmProductOfferId = $crmProduct['offers'][0]['id'] ?? null;
             if ($crmProductOfferId === null) {
@@ -162,7 +162,7 @@ abstract class BaseOrderManager
                 $item['productName'] = $orderItem['name'];
                 $item['properties'] = [
                     [
-                        'code' => 'same_markeplace_offer_id',
+                        'code' => 'some_markeplace_offer_id',
                         'name' => 'Артикул на маркете',
                         'value' => $offerId,
                     ],
@@ -209,6 +209,6 @@ abstract class BaseOrderManager
 
     public static function getServiceName(): string
     {
-        return 'SAME_MARKETPLACE_' . strtoupper(static::classNameShort());
+        return 'SOME_MARKETPLACE_' . strtoupper(static::classNameShort());
     }
 }

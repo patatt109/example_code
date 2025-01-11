@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Modules\AnyModule\Commands;
 
 use GuzzleHttp\Exception\GuzzleException;
-use Modules\AnyModule\Services\SameMarketplace\DBS\Processor as DbsProcessor;
-use Modules\AnyModule\Services\SameMarketplace\FBS\Processor as FbsProcessor;
+use Modules\AnyModule\Services\SomeMarketplace\DBS\Processor as DbsProcessor;
+use Modules\AnyModule\Services\SomeMarketplace\FBS\Processor as FbsProcessor;
 use Phact\Commands\Command;
 use Psr\SimpleCache\InvalidArgumentException;
 
-class SameMarketplaceCommand extends Command
+class SomeMarketplaceCommand extends Command
 {
     private DbsProcessor $dbs;
     private FbsProcessor $fbs;

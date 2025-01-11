@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Modules\AnyModule\Services\SameMarketplace;
+namespace Modules\AnyModule\Services\SomeMarketplace;
 
 use GuzzleHttp\Exception\GuzzleException;
-use Libs\Services\SameMarketplace\BaseApiClient;
+use Libs\Services\SomeMarketplace\BaseApiClient;
 use Libs\Traits\Logger;
-use Modules\AnyModule\Models\SameMarketplace\Shipment;
+use Modules\AnyModule\Models\SomeMarketplace\Shipment;
 use Phact\Helpers\ClassNames;
 use Phact\Helpers\SmartProperties;
 use Psr\Log\LoggerInterface;
@@ -106,15 +106,15 @@ abstract class BaseProcessor
      */
     public function editConfirmedOrders(): void
     {
-        $sameMarketplaceOrderIdList = $this->client->getConfirmedOrderIdList();
+        $someMarketplaceOrderIdList = $this->client->getConfirmedOrderIdList();
         $shipmentList = $this->shipmentManager->findNewShipmentsWithOrderCode();
         $shipmentIdList = array_map(static fn($item) => $item->shipment_id, $shipmentList);
-        $sameMarketplaceOrderIdList = array_values(array_unique([...$sameMarketplaceOrderIdList, ...$shipmentIdList]));
-        if (empty($sameMarketplaceOrderIdList)) {
+        $someMarketplaceOrderIdList = array_values(array_unique([...$someMarketplaceOrderIdList, ...$shipmentIdList]));
+        if (empty($someMarketplaceOrderIdList)) {
             return;
         }
-        $sameMarketplaceOrderList = $this->client->getOrderList($sameMarketplaceOrderIdList);
-        foreach ($sameMarketplaceOrderList as $item) {
+        $someMarketplaceOrderList = $this->client->getOrderList($someMarketplaceOrderIdList);
+        foreach ($someMarketplaceOrderList as $item) {
             $shipment = $this->shipmentManager->findShipmentByShipmentId((string)$item['shipmentId']);
             if (!$shipment) {
                 $this->shipmentManager->saveOrUpdateShipment($item);
@@ -142,6 +142,6 @@ abstract class BaseProcessor
 
     public static function getServiceName(): string
     {
-        return 'SAME_MARKETPLACE_' . strtoupper(static::classNameShort());
+        return 'SOME_MARKETPLACE_' . strtoupper(static::classNameShort());
     }
 }
